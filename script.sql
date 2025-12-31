@@ -1,30 +1,38 @@
-CREATE DATABASE BlogDB;
-USE BlogDB;
+CREATE DATABASE blog_pro_db;
+use blog_db;
 
-CREATE TABLE Utilisateur (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  nom VARCHAR(100) NOT NULL,
-  email VARCHAR(100) UNIQUE,
-  mot_de_passe VARCHAR(255) NOT NULL
+CREATE TABLE user(
+id INT auto_increment primary key,
+name varchar(100) not null,
+email varchar(100) unique,
+password varchar(225) not null
+);
+create table category(
+id int auto_increment primary key,
+category_name varchar(100) not null
 );
 
-CREATE TABLE Article (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  titre VARCHAR(150) NOT NULL,
-  contenu TEXT NOT NULL,
-  date_pub DATE,
-  id_utilisateur INT,
-  FOREIGN KEY (id_utilisateur) REFERENCES Utilisateur(id)
+CREATE TABLE article(
+id INT auto_increment primary key,
+tittle varchar(225) not null,
+content text not null,
+status_public TINYINT(1) default 0,
+date_publication date,
+id_user INT,
+id_category INT,
+foreign key (id_user) references user(id),
+foreign key (id_category) references category(id)	
 );
 
-CREATE TABLE Commentaire (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  contenu TEXT NOT NULL,
-  auteur VARCHAR(100),
-  date_commentaire DATE,
-  id_article INT,
-  FOREIGN KEY (id_article) REFERENCES Article(id)
+CREATE TABLE comment(
+id INT auto_increment primary key,
+content text not null,
+datep date,
+id_user INT,
+id_article INT,
+foreign key (id_user) references user(id),
+foreign key (id_article) references article(id)
 );
 
-SHOW TABLES;
-INSERT INTO Utilisateur (nom, email, mot_de_passe) VALUES ('Alice', 'alice@test.com', '1234');
+create index namex on user (name);
+create index tittlex on article (tittle);
